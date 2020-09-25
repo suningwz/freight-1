@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <!-- wizard_user_status form view -->
+        <record id="wizard_user_status_view_form" model="ir.ui.view">
+            <field name="name">wizard.user.status.view.form</field>
+            <field name="model">wizard.user.status</field>
+            <field name="arch" type="xml">
+                <form string="Update pos dam shift user">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="gardu" required="1"/>
+                            <field name="shift" required="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_confirm" type="object" string="Update" class="oe_hightlight" confirm="Apakah data sudah benar ??"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="launched_wizard_user_status"
+            name = "Update User Pos dan Shift"
+            res_model = "wizard.user.status"
+            view_mode = "form"
+            target = "new"
+            />
+
+        <!-- This Menu Item must have a parent and an action -->
+        <!-- <menuitem id="launched_wizard_user_status" name="Update User Pos dan Shift" parent="freight.freight_menu_categ" action="launched_wizard_user_status" sequence="88"/> -->
+    </data>
+</odoo>

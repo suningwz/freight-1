@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <!-- freight.wizard_do_cancel form view -->
+        <record id="freight_wizard_do_cancel_view_form" model="ir.ui.view">
+            <field name="name">freight.wizard_do_cancel.view.form</field>
+            <field name="model">freight.wizard_do_cancel</field>
+            <field name="arch" type="xml">
+                <form string="Checkin/Checkout atau cancel manual">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="do_id" domain="[('state','=','open')]"/>
+                            <field name="tipe_kendaraan" readonly="1"/>
+                            <field name="produk"  readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="expired_date" readonly="1"/>
+                            <field name="keterangan"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_check_do" type="object" string="Checkin/out" class="oe_hightlight" confirm="Apakah data sudah benar ??"/>
+                        or
+                        <button name="action_cancel_do" type="object" string="Cancel DO" class="btn-danger" confirm="Apakah yakin akan dibatalkan ??"/>
+                        or
+                        <button special="cancel" string="Keluar"/>
+                    </footer>
+                </form>                
+            </field>
+        </record>
+
+        <act_window id="launched_wizard_do_cancel"
+            name = "Check-in/out DO manual atau membatalkan"
+            src_model = "delivery.order"
+            res_model = "freight.wizard_do_cancel"
+            view_mode = "form"
+            target = "new"
+            />
+
+        <record id='launched_wizard_do_logout' model='ir.actions.act_url'>
+            <field name='name'>Logout</field>
+            <field name='type'>ir.actions.act_url</field>
+            <field name='target'>self</field>
+            <field name='url'>/web/session/logout</field>
+        </record>
+    </data>
+</odoo>

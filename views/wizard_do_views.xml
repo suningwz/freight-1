@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <!-- freight.wizard_do form view -->
+        <record id="freight_wizard_do_view_form" model="ir.ui.view">
+            <field name="name">freight.wizard_do.view.form</field>
+            <field name="model">freight.wizard_do</field>
+            <field name="arch" type="xml">
+                <form string="Create Delivery Order">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="tipe_kendaraan" required="1"/>
+                            <field name="produk"  required="1"/>
+                            <field name="date" required="1"/>
+                            <field name="expired_date" required="1"/>
+                            <!-- <field name="qty"/> -->
+                            <field name="total_do" />
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_create_do" type="object" string="Create" class="oe_hightlight" confirm="Apakah data sudah benar ??"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="launched_wizard_do"
+            name = "Create Delivery Order using batch"
+            res_model = "freight.wizard_do"
+            view_mode = "form"
+            target = "new"
+            />
+
+        <!-- This Menu Item must have a parent and an action -->
+        <!-- <menuitem id="launched_wizard_do_menu_act" name="Create Multi DO" parent="freight.freight_menu_categ" action="launched_wizard_do" sequence="99"/> -->
+    </data>
+</odoo>

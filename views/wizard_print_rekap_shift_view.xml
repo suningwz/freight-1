@@ -1,0 +1,148 @@
+<odoo>
+    <data>
+        <!-- do.rekap.print.wizard form view -->
+        <record id="do_rekap_shift_print_wizard_view_form" model="ir.ui.view">
+            <field name="name">do.rekap.shift.print.wizard.view.form</field>
+            <field name="model">do.rekap.shift.print.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Laporan Produksi Tambang (per Shift)">
+                    <sheet>
+                        <group col='2'>
+                                <!-- Add your fields here -->
+                            <group>
+                                <field name="date_start"/>
+                            </group>
+                            <group>
+                                <field name="pos"/>
+                                <field name="shift"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="action_get_report" type="object" string="Cetak Laporan"/>
+                            or
+                            <button string="Cancel" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_do_rekap_shift_print_wizard"
+            name="Laporan Produksi Tambang (per Shift)"
+            res_model="do.rekap.shift.print.wizard"
+            view_mode="form"
+            target="new"
+            />
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="do_rekap_shift_print_wizard_menu_act" name="Laporan Produksi Tambang (per Shift)" parent="freight.report_do_menu_categ" action="action_do_rekap_shift_print_wizard" sequence="2"/>
+
+        <report id="recap_shift_report"
+            model='do.rekap.shift.print.wizard'
+            string="Laporan Produksi Tambang (per Shift)"
+            report_type="qweb-pdf"
+            name = "freight.do_rekap_shift_print_wizard_view"
+            menu = "False"
+        />
+
+        <template id="do_rekap_shift_print_wizard_view">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <div class="article">
+                        <div class="row">
+                            <div class="col-3 mb4">
+                                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
+                            </div>
+                            <div class="col-9 text-right" style="margin-top:22px;" t-field="res_company.report_header" name="moto"/>
+                        </div>
+                        <div t-if="res_company.logo or res_company.report_header" class="row zero_min_height">
+                            <div class="col-12">
+                                <div style="border-bottom: 1px solid black;"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" name="company_address">
+                                <div t-field="res_company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                            </div>
+                        </div>
+                        <h4 class="text-left">
+                            <p>
+                                <strong>Hari :</strong>
+                                <t t-esc="hari"/>
+                            </p>
+                            <p>
+                                <strong>Tanggal :</strong>
+                                <t t-esc="date_end"/>
+                            </p>
+                            <p>
+                                <strong>Shift :</strong>
+                                <t t-esc="shift"/>
+                            </p>
+                            <p>
+                                <strong>Pos :</strong>
+                                <t t-esc="pos"/>
+                            </p>
+                        </h4>
+                        <h3 class="text-center">Laporan Produksi Tambang (Per Shift)</h3>
+                        <table class="table table-condensed table-bordered" style="width: 100%">
+                            <thead>
+                                <th class="text-center" style="width: 10%">No.</th>
+                                <th class="text-center" style="width: 30%">Tipe Kendaraan</th>
+                                <th class="text-center" style="width: 30%">Produk</th>
+                                <th class="text-center" style="width: 20%">Jumlah (Rit)</th>
+                            </thead>
+                            <tbody>
+                                <t t-set='grand_total' t-value='0'/>
+                                <t t-set='line_no' t-value='0'/>
+                                <t t-foreach="docs" t-as="doc">
+                                    <t t-set='line_no' t-value='line_no + 1'/>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span t-esc="line_no"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['kendaraan']"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-esc="doc['produk']"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="doc['qty']"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set='grand_total' t-value="grand_total + doc['qty']"/>
+                                </t>
+                                <!-- <tr>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td>Total keseluruhan</td>
+                                    <td class="text-right">
+                                        <span t-esc="grand_total"/>
+                                    </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                        <div class="footer">
+                            <div class="row text-center" style="border-top: 1px solid black;">
+                                <div class="col col-3 offset-9 text-right">
+                                    <ul class="list-inline mt-2">
+                                        <li class="list-inline-item">Page:</li>
+                                        <li class="list-inline-item">
+                                            <span class="page"/>
+                                        </li>
+                                        <li class="list-inline-item">/</li>
+                                        <li class="list-inline-item">
+                                            <span class="topage"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

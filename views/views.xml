@@ -1,0 +1,504 @@
+<odoo>
+  <data>
+    <!-- delivery.order tree view -->
+    <record id="model_name_view_tree" model="ir.ui.view">
+      <field name="name">delivery.order.view.tree</field>
+      <field name="model">delivery.order</field>
+      <field name="arch" type="xml">
+        <tree decoration-success="state=='done'" decoration-danger="state=='cancel'">
+          <!-- Add your fields here -->
+          <field name="name"/>
+          <field name="date"/>
+          <field name="tipe_kendaraan"/>
+          <field name="produk"/>
+          <field name="expired_date"/>
+          <field name="attendance_state"/>
+          <field name="state"/>
+          <field name="keterangan"/>
+        </tree>
+      </field>
+    </record>
+    <!-- delivery.order form view -->
+    <record id="delivery_order_view_form" model="ir.ui.view">
+      <field name="name">delivery.order.view.form</field>
+      <field name="model">delivery.order</field>
+      <field name="arch" type="xml">
+        <form string="Delivery Order">
+          <header>
+            <button name="action_confirm" type="object" string="Confirm" states='draft' class="oe_highlight"/>
+              confirm="Anda yakin akan menghapus data ini ??"/>
+            <button name="action_generate_barcode" type="object" string="Generate Barcode"/>
+            <button name="action_cancel" type="object" string="Cancel" states='open' class="btn-danger" confirm="apakah yakin akan dibatalkan??"/>
+            <!-- <button name="freight.launched_wizard_do" type="action" string="Create Multi DO" class="oe_highlight"/> -->
+            <field name="state" widget="statusbar"/>
+          </header>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+              </button>
+            </div>
+            <group string="Information">
+              <!-- Add your fields here -->
+              <field name="name" readonly='1'/>
+              <field name="date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+              <field name="tipe_kendaraan" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+              <field name="produk" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+							<field name="expired_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+              <field name="keterangan" readonly="1"/>
+            </group>
+            <group string="Barcode">
+              <field name="barcode_type" readonly="1"/>
+              <field name="barcode_image" widget='image'/>
+            </group>
+            <group string="attendance">
+              <field name="attendance_ids">
+                <tree>
+                  <field name="tanggal"/>
+                  <field name="user_id"/>
+                  <field name="gardu"/>
+                  <field name="shift"/>
+                  <field name="check_in"/>
+                  <field name="check_out"/>
+                </tree>
+              </field>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- delivery.order pivot view -->
+    <record id="delivery_order_view_pivot" model="ir.ui.view">
+      <field name="name">delivery.order.view.pivot</field>
+      <field name="model">delivery.order</field>
+      <field name="arch" type="xml">
+        <pivot string="Pivot Description">
+          <!-- Add your fields here -->
+          <field name="tipe_kendaraan" type="row"/>
+          <field name="produk" type="row"/>
+          <!-- <field name="userid" type="row"/> -->
+          <field name="date" type="col"/>
+        </pivot>
+      </field>
+    </record>
+
+    <!-- delivery.order search view -->
+    <record id="delivery_order_view_search" model="ir.ui.view">
+      <field name="name">delivery.order.view.search</field>
+      <field name="model">delivery.order</field>
+      <field name="arch" type="xml">
+        <search string="Search Description">
+          <!-- Add your fields here -->
+          <field name="tipe_kendaraan"/>
+          <field name="produk"/>
+          <field name="date"/>
+          <field name="expired_date"/>
+          <group expand="0" string="Group By">
+            <filter name="groupby_state" string="Status" domain="[]" context="{'group_by': 'state'}" help="Group Status"/>
+            <filter name="groupby_tipe_kendaraan" string="Tipe kendaraan" domain="[]" context="{'group_by': 'tipe_kendaraan'}" help="Group Tipe Kendaraan"/>
+            <filter name="groupby_produk" string="Produk" domain="[]" context="{'group_by': 'produk'}" help="Group Produk"/>
+          </group>
+          <filter name="filter_draft" string="draft" domain="[('state','=','draft')]" help="Filter status draft"/>
+          <filter name="filter_open" string="open" domain="[('state','=','open')]" help="Filter status open"/>
+          <filter name="filter_done" string="done" domain="[('state','=','done')]" help="Filter status done"/>
+          <filter name="filter_cancel" string="cancel" domain="[('state','=','cancel')]" help="Filter status cancel"/>
+          <filter name="filter_unused" string="belum terpakai" domain="[('state','=','open'),('attendance_state','=','checked_out')]" help="Filter untuk do belum terpakai"/>
+        </search>
+      </field>
+    </record>
+
+    <!-- delivery.order action window -->
+    <record id="delivery_order_action" model="ir.actions.act_window">
+      <field name="name">Delivery order</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">delivery.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+          click create to create new delivery order
+        </p><p>
+          <!-- More details about what a user can do with this object will be OK -->
+          Delivery order adalah dokumen untuk ijin mengangkut barang dari perusahaan.
+          Setiap armada wajib mambawa satu DO untuk diverifikasi setiap gate.
+        </p>
+      </field>
+    </record>
+    <!-- This Menu Item will appear in the Upper bar, that's why It needs NO parent or action -->
+    <menuitem id="freight_menu_root" name="Armada" sequence="10"/>
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="freight_menu_categ" name="Dokumen" parent="freight.freight_menu_root" sequence="10"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="delivery_order_menu_act" name="Delivery Order" parent="freight.freight_menu_categ" action="delivery_order_action" sequence="10"/>    
+
+    <record id="freight_attendance_tree_view" model="ir.ui.view">
+        <field name="name">freight.attendance.tree.view</field>
+        <field name="model">freight.attendance</field>
+        <field name="arch" type="xml">
+            <!-- <tree string="Penerimaan Delivery Order" decoration-success="state=='done'" decoration-danger="state=='cancel'" create="false" edit="false" delete="false"> -->
+            <tree string="Penerimaan Delivery Order" decoration-success="state=='done'" decoration-danger="state=='cancel'" delete="false">
+                <field name="do_id"/>
+                <field name="tanggal"/>
+                <field name="user_id"/>
+                <field name="gardu"/>
+                <field name="shift"/>
+                <field name="tipe_kendaraan"/>
+                <field name="produk"/>
+                <field name="check_in"/>
+                <field name="check_out"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    
+    <record id="freight_attendance_form_view" model="ir.ui.view">
+        <field name="name">gerdhu.attendace.form.view</field>
+        <field name="model">freight.attendance</field>
+        <field name="arch" type="xml">
+            <!-- <form string="Pengiriman hasil tambang" create="false" edit="false" delete="false"> -->
+            <form string="Pengiriman hasil tambang" delete="false">
+                <header>
+                  <field name="state" widget='statusbar'/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="do_id" required="1"/>
+                        <field name="tanggal" readonly="1"/>
+                        <field name="user_id" required="1"/>
+                        <field name="gardu" required="1"/>
+                        <field name="shift" required="1"/>
+                        <field name="tipe_kendaraan" required="1"/>
+                        <field name="produk" required="1"/>
+                        <field name="check_in" />
+                        <field name="check_out"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="freight_attendance_view_pivot" model="ir.ui.view">
+        <field name="name">freight.attendance.pivot</field>
+        <field name="model">freight.attendance</field>
+        <field name="arch" type="xml">
+            <pivot string="Attendance">
+                <field name="gardu" type="row"/>
+                <field name="shift" type="row"/>
+                <field name="tipe_kendaraan" type="row"/>
+                <field name="produk" type="row"/>
+                <field name="check_in" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="freight_attendance_view_graph" model="ir.ui.view">
+        <field name="name">freight.attendance.graph</field>
+        <field name="model">freight.attendance</field>
+        <field name="title">Data Produksi</field>
+        <field name="arch" type="xml">
+            <graph string="Attendance" type='line'>
+                <field name="tipe_kendaraan" type='col'/>
+                <field name="tanggal" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="freight_attendance_action" model="ir.actions.act_window">
+        <field name="name">Attendances</field>
+        <field name="res_model">freight.attendance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="context">{"search_default_today":1}</field>
+        <field name="help" type="html">
+            <p>The attendance records of your employees will be displayed here.</p>
+            <p>Please make sure you're using the correct filter if you expected to see any.</p>
+        </field>
+    </record>
+
+    <record id="freight_attendance_action_graph" model="ir.actions.act_window">
+        <field name="name">Analisa Penggunaan Delivery Order</field>
+        <field name="res_model">freight.attendance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="view_id"></field>  <!-- force empty -->
+    </record>
+
+    <record id="freight_attendance_action_kiosk_mode" model="ir.actions.client">
+        <field name="name">Attendances</field>
+        <field name="tag">freight_attendance_kiosk_mode</field>
+        <field name="target">fullscreen</field>
+    </record>
+
+	<record id="freight_attendance_action_greeting_message" model="ir.actions.client">
+        <field name="name">Message</field>
+        <field name="tag">freight_attendance_greeting_message</field>
+    </record>
+
+    <menuitem id="menu_freight_attendance_root" name="Attendances" parent="freight_menu_root" sequence="70" />
+    
+    <menuitem id="menu_freight_attendance_manage_attendances" name="Manage Attendances" parent="menu_freight_attendance_root" sequence="20" />
+
+    <menuitem id="menu_freight_attendance_view_attendances" name="Attendances" parent="menu_freight_attendance_manage_attendances" sequence="10" action="freight_attendance_action"/>
+
+    <menuitem id="menu_freight_attendance_report" name="Analisa Delivery Order terpakai" parent="report_do_menu_categ" sequence="30" action="freight_attendance_action_graph"/>
+
+    <menuitem id="menu_freight_attendance_kiosk_mode" name="Kiosk Mode" parent="menu_freight_attendance_manage_attendances" sequence="20" action="freight_attendance_action_kiosk_mode"/>
+
+    <record id="delivery_order_action_server" model="ir.actions.server">
+      <field name="name">Confirm DO</field>
+      <field name="type">ir.actions.server</field>
+      <field name="model_id" ref="freight.model_delivery_order"/>
+      <field name="binding_model_id" ref="freight.model_delivery_order"/>
+      <field name="state">code</field>
+      <field name="code">
+        if records:
+            for rec in records:
+                action = rec.action_confirm()
+      </field>
+    </record>
+
+    <!-- <record id="delivery_order_print_action_server" model="ir.actions.server">
+      <field name="name">Print DO</field>
+      <field name="type">ir.actions.server</field>
+      <field name="model_id" ref="freight.model_delivery_order"/>
+      <field name="binding_model_id" ref="freight.model_delivery_order"/>
+      <field name="state">code</field>
+      <field name="code">
+        if records:
+            records[0].env.cr.execute("DELETE FROM print_do")
+            seq = 1
+            for rec in records:
+                if seq == 1:
+                    curr_id = rec.env['print.do'].create({'do1_id': rec.id})
+                    seq += 1
+                elif seq == 2:
+                    curr_id.write({'do2_id': rec.id})
+                    seq += 1
+                elif seq == 3:
+                    curr_id.write({'do3_id': rec.id})
+                    seq += 1
+                else:
+                    curr_id.write({'do4_id': rec.id})
+                    seq = 1
+            printdo_ids = records[0].env['print.do'].search([])
+            records[0].env.ref('freight.action_report_barcode_member_batch').report_action(printdo_ids)
+
+
+      </field>
+    </record> -->
+
+    <!-- res.model inherit form view -->
+    <record id="res_company_inherit_view_id" model="ir.ui.view">
+      <field name="name">res.company.inherit.view.form</field>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
+      <field name="arch" type="xml">
+        <!-- Add your xpath here -->
+        <xpath expr="//notebook/page/group/group" position="after">
+          <group string="Delivery Order">
+            <field name="tenggat"/>
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- print.do tree view -->
+    <!-- <record id="print_do_view_tree" model="ir.ui.view">
+      <field name="name">print.do.view.tree</field>
+      <field name="model">print.do</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom"> -->
+          <!-- Add your fields here -->
+          <!-- <field name="do1_id"/>
+          <field name="do2_id"/>
+          <field name="do3_id"/>
+          <field name="do4_id"/>
+        </tree>
+      </field>
+    </record> -->
+
+    <!-- print.do action window -->
+    <!-- <record id="print_do_action" model="ir.actions.act_window">
+      <field name="name">print.do.action</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">print.do</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create"> -->
+          <!-- Add Text Here -->
+          <!-- click create to create entry -->
+        <!-- </p><p> -->
+          <!-- More details about what a user can do with this object will be OK --> 
+          <!-- Entry to create report
+        </p>
+      </field>
+    </record> -->
+
+    <!-- wizard.print.do form view -->
+    <record id="wizard_print_do_view_form" model="ir.ui.view">
+      <field name="name">wizard.print.do.view.form</field>
+      <field name="model">wizard.print.do</field>
+      <field name="arch" type="xml">
+        <form string="Cetak DO secara batch">
+          <sheet>
+            <group>
+              <!-- Add your fields here -->
+              <field name="do_start" domain="[('state','=','open')]"/>
+              <field name="do_end" domain="[('state','=','open')]"/>
+              <field name="digit"/>
+            </group>
+            <footer>
+              <button name="action_print_do" string="Cetak" type="object" class="oe_highlight"/>
+              <button string="Cancel" special="cancel"/>
+            </footer>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <act_window id="wizard_print_do_action"
+      name="Cetak DO secara batch"
+      res_model="wizard.print.do"
+      view_mode="form"
+      target="new"
+    />
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="report_do_menu_categ" name="Report" parent="freight_menu_root" sequence="80"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="print_do_menu_act" name="Cetak DO (batch)" parent="report_do_menu_categ" action="wizard_print_do_action" sequence="1"/>
+
+    <!-- res.users inherit form view -->
+    <record id="views_users_form" model="ir.ui.view">
+      <field name="name">res.users.inherit.view.form</field>
+      <field name="model">res.users</field>
+      <field name="inherit_id" ref="base.view_users_form"/>
+      <field name="arch" type="xml">
+        <!-- Add your xpath here -->
+        <xpath expr="//page[2]" position="after">
+          <page string="Pos Check-in">
+            <group>
+              <!-- <field name="active_pos"/> -->
+              <field name="gardu"/>
+              <field name="shift"/>
+            </group>
+            <!-- <field name="pos_ids">
+              <tree editable='bottom'>
+                <field name='hari'/>
+                <field name="jam_mulai" widget="float_time"/>
+                <field name="jam_selesai" widget="float_time"/>
+                <field name='pos'/>
+              </tree>
+            </field> -->
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- tipe.kendaraan tree view -->
+    <record id="tipe_kendaraan_view_tree" model="ir.ui.view">
+      <field name="name">tipe.kendaraan.view.tree</field>
+      <field name="model">tipe.kendaraan</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom">
+          <!-- Add your fields here -->
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- tipe.kendaraan action window -->
+    <record id="tipe_kendaraan_action" model="ir.actions.act_window">
+      <field name="name">Master tipe kendaraan</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">tipe.kendaraan</field>
+      <field name="view_mode">tree</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p><p>
+          <!-- More details about what a user can do with this object will be OK --> 
+        </p>
+      </field>
+    </record>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="freight_config_menu_categ" name="Configuration" parent="freight_menu_root" sequence="90"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="tipe_kendaraan_menu_act" name="Tipe Kendaraan" parent="freight_config_menu_categ" action="tipe_kendaraan_action" sequence="10"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="produk_menu_act" name="Produk" parent="freight_config_menu_categ" action="product.product_normal_action" sequence="20"/>
+
+    <!-- pos.gardu tree view -->
+    <record id="pos_gardu_view_tree" model="ir.ui.view">
+      <field name="name">pos.gardu.view.tree</field>
+      <field name="model">pos.gardu</field>
+      <field name="arch" type="xml">
+        <tree editable='bottom'>
+          <!-- Add your fields here -->
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- pos.gardu action window -->
+    <record id="pos_gardu_action" model="ir.actions.act_window">
+      <field name="name">Tabel master pos</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">pos.gardu</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+          click create to create data
+        </p><p>
+          <!-- More details about what a user can do with this object will be OK --> 
+          Tabel master pos
+        </p>
+      </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="pos_gardu_menu_act" name="Master Pos" parent="freight_config_menu_categ" action="pos_gardu_action" sequence="30"/>
+
+    <!-- pos.shift tree view -->
+    <record id="pos_shift_view_tree" model="ir.ui.view">
+      <field name="name">pos.shift.view.tree</field>
+      <field name="model">pos.shift</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!-- Add your fields here -->
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- pos.shift action window -->
+    <record id="pos_shift_action" model="ir.actions.act_window">
+      <field name="name">Tabel master shift</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">pos.shift</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+          click create to create entry
+        </p><p>
+          <!-- More details about what a user can do with this object will be OK --> 
+          tabel master shift
+        </p>
+      </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="pos_shift_menu_act" name="Master Shift" parent="freight_config_menu_categ" action="pos_shift_action" sequence="40"/>
+  </data>
+</odoo>

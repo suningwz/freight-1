@@ -10,6 +10,8 @@
             <span class="o_freight_attendance_kiosk_backdrop"/>
             <div class="o_freight_attendance_clock text-center"/>
             <div class="o_freight_attendance_kiosk_mode">
+		<h1><small>Nama:</small> <t t-esc="widget.session.name"/></h1>
+		<h1><small>Pos:</small> <t t-esc="widget.pos_name"/>      <small>Shift:</small> <t t-esc="widget.shift_name"/></h1>
                 <h1><small>Welcome to</small> <t t-esc="widget.company_name"/></h1>
                 <img t-attf-src="{{widget.company_image_url}}" alt="Company Logo" class="o_freight_attendance_kiosk_company_image"/>
                 <div class="row o_freight_attendance_kiosk_welcome_row">

@@ -161,11 +161,11 @@ class DeliveryOrder(models.Model):
                     # print('stop checked-in  %s' % datetime.now())
                     return attendance
                 else:
-                    raise UserError(_('DO sudah kadaluwarsa atau sudah terpakai, terima kasih'))
+                    raise UserError(_('DO sudah kadaluwarsa, terima kasih'))
                     attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
                     return attendance
             else:
-                raise UserError(_('DO sudah kadaluwarsa atau sudah terpakai, terima kasih'))
+                raise UserError(_('DO sudah terpakai, terima kasih'))
                 attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
                 return attendance
 
@@ -214,7 +214,6 @@ class DoGate(models.Model):
     gate_id = fields.Many2one(comodel_name='gate', string='Gate')
     checkin = fields.Datetime(string='Jam Check in')
     do_id = fields.Many2one(comodel_name='delivery.order', string='do id')
-    
 
 class Gate(models.Model):
     _name = 'gate'
@@ -462,7 +461,17 @@ class ResUsers(models.Model):
         # print(dow)
         self.active_pos = self.env['pos.gardu'].search([],limit=1) 
         return
-
+    
+    @api.model
+    def get_users_login_shift(self, uid):
+        login_user = self.env['res.users'].search([('id', '=',uid)])
+        return login_user.shift.name;
+        
+    @api.model
+    def get_users_login_pos(self, uid):
+        login_user = self.env['res.users'].search([('id', '=',uid)])
+        return login_user.gardu.name;
+        
 
 class ResUsersPos(models.Model):
     _name = 'res.users.pos'

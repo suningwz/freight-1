@@ -24,6 +24,7 @@
 
     # always loaded
     'data': [
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
         'views/wizard_do_views.xml',
@@ -34,7 +35,6 @@
         'views/wizard_print_rekap_shift_view.xml',
         'views/web_asset_backend_template.xml',
         'views/wizard_user_status_view.xml',
-		'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'demo': [

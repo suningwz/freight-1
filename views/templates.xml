@@ -11,6 +11,7 @@
                            <div style="display: table-row;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
+<p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name1']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan1']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk1']"/></p>
@@ -19,6 +20,7 @@
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
+<p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name2']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan2']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk2']"/></p>
@@ -29,6 +31,7 @@
                            <div style="display: table-row;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
+<p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name3']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan3']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk3']"/></p>
@@ -37,6 +40,7 @@
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
+<p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name4']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan4']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk4']"/></p>

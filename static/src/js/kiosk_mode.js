@@ -31,6 +31,7 @@ odoo.define('freight_attendance.kiosk_mode', function (require) {
 		}).then(function (data) {
 			self.pos_name = data;
 			console.log(data);
+			self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
 		});
 
 		this._rpc({
@@ -40,6 +41,7 @@ odoo.define('freight_attendance.kiosk_mode', function (require) {
 		}).then(function (shift) {
 			self.shift_name = shift;
 			console.log(shift);
+			self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
 		});
 
             var def = this._rpc({

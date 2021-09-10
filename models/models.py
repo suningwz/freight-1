@@ -117,14 +117,16 @@ class DeliveryOrder(models.Model):
         action_message['employee_name'] = self.name
         action_message['kendaraan'] = self.tipe_kendaraan.name
         action_message['produk']  =self.produk.name
+        action_message['expired_date'] = self.expired_date
         action_message['next_action'] = next_action
-
+        
         if self.env.user:
             modified_attendance = self.sudo(self.env.user.id).attendance_action_change()
         else:
             modified_attendance = self.sudo().attendance_action_change()
         # modified_attendance = self.attendance_action_change()
-        action_message['attendance'] = modified_attendance.read()[0]
+        action_message['message'] = modified_attendance['message']
+        action_message['attendance'] = modified_attendance['attendance'].read()[0]
         return {'action': action_message}
 
     @api.multi
@@ -149,52 +151,40 @@ class DeliveryOrder(models.Model):
                         tanggal = (action_date + timedelta(hours=7)).strftime('%Y-%m-%d')
                     # print('tanggal : %s' % tanggal)
                     self.env.cr.execute('''
-                    insert into freight_attendance (do_id, gardu, shift, check_in, user_id, create_date, create_uid, write_date, write_uid, tipe_kendaraan, produk, state, tanggal)
-                    values (%s, %s, %s, '%s', %s, now(), %s, now(), %s, %s, %s, 'open', '%s')
-                    ''' % (self.id, login_user.gardu.id, login_user.shift.id, action_date, login_user.id, login_user.id, login_user.id, self.tipe_kendaraan.id, self.produk.id, tanggal) )
+                    insert into freight_attendance (do_id, gardu, shift, check_in, check_out, user_id, create_date, create_uid, write_date, write_uid, tipe_kendaraan, produk, state, tanggal)
+                    values (%s, %s, %s, '%s', '%s', %s, now(), %s, now(), %s, %s, %s, 'done', '%s')
+                    ''' % (self.id, login_user.gardu.id, login_user.shift.id, action_date,action_date, login_user.id, login_user.id, login_user.id, self.tipe_kendaraan.id, self.produk.id, tanggal) )
                     self.env.cr.commit()
                     # print('stop create attendaces %s' % datetime.now())
-                    self.write({'attendance_state': 'checked_in'})
+                    self.write({'state' : 'done',
+                                'attendance_state' : 'checked_out',})
                     # self.env.cr.commit()
                     # print('stop commit %s' % datetime.now())
                     attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
                     # print('stop checked-in  %s' % datetime.now())
-                    return attendance
+                    return {
+                        'attendance':attendance,
+                        'message':'sukses'
+                    }
                 else:
-                    raise UserError(_('DO sudah kadaluwarsa, terima kasih'))
-                    attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
-                    return attendance
+                    attendance = self.env['freight.attendance'].search([('check_out', '=', False)], limit=1)
+                    return {
+                        'attendance':attendance,
+                        'message':'DO Sudah Expired'
+                    }
             else:
-                raise UserError(_('DO sudah terpakai, terima kasih'))
                 attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
-                return attendance
+                return {
+                    'attendance':attendance,
+                    'message':'DO Sudah Terscan'
+                }
 
         else:
-            if self.state == 'open':
-                login_user = self.env['res.users'].search([('id', '=', self.env.uid)])
-                attendance = self.env['freight.attendance'].search([('do_id', '=', self.id), ('check_out', '=', False)], limit=1)
-                # print('stop read attendances checkout  %s' % datetime.now())
-                if attendance:
-                    # attendance.write({'check_out' : action_date})
-                    self.env.cr.execute('''
-                    update freight_attendance set check_out = '%s', state='done', write_date=now(), write_uid= %s 
-                    where do_id = %s
-                    ''' % (action_date, login_user.id, self.id))
-                    self.env.cr.commit()
-                    # self.cache.invalidate()
-                    # print('stop attendance.write  %s' % datetime.now())
-                    self.write({'state' : 'done',
-                                'attendance_state' : 'checked_out',})
-                    self.env.cr.commit()
-                    # print('stop commit %s' % datetime.now())
-                else:
-                    raise UserError(_('Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
-                        'Your attendances have probably been modified manually by human resources.') % {'empl_name': self.name, })
-                # print('stop checked-out %s' % datetime.now())
-                return attendance
-            else :
-                raise UserError(_('DO sudah kadaluwarsa atau sudah terpakai, terima kasih'))
-                return attendance
+            attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
+            return {
+                'attendance':attendance,
+                'message':'DO Sudah Terscan'
+            }
 
     @api.depends('attendance_ids')
     def _compute_last_attendance_id(self):
@@ -503,3 +493,4 @@ class PosShift(models.Model):
     _description = 'Pos Shift'
 
     name = fields.Char(string='Name')
+

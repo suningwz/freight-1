@@ -112,41 +112,38 @@
             <span class="o_freight_attendance_kiosk_backdrop"/>
             <div class="o_freight_attendance_clock text-center"/>
             <div class="o_freight_attendance_kiosk_mode">
-                <t t-if="widget.attendance">
-                    <t t-if="widget.attendance.check_out">
-                        <h1 class="mb0">Checkout !</h1>
-                        <h2 class="mb0">Nomor DO :<t t-esc="widget.employee_name"/></h2>
-                        <h2 class="mb0">Kendaraan :<t t-esc="widget.kendaraan"/></h2>
-                        <h2 class="mb0">Produk :<t t-esc="widget.produk"/></h2>
-                        <h2 class="o_freight_attendance_message_message mt4 mb24"/>
-                        <div class="alert alert-info h2 mt0" role="status">
-                            Checked out at <b><t t-esc="widget.attendance.check_out_time"/></b>
-                        </div>
-                        <h3 class="o_freight_attendance_random_message mb24"/>
-                        <div class="o_freight_attendance_warning_message mt24 alert alert-warning" style="display:none" role="alert"/>
-                    </t>
-                    <t t-else="">
-                        <h1 class="mb0">Check-in !</h1>
-                        <h2 class="mb0">Nomor DO :<t t-esc="widget.employee_name"/></h2>
-                        <h2 class="mb0">Kendaraan :<t t-esc="widget.kendaraan"/></h2>
-                        <h2 class="mb0">Produk :<t t-esc="widget.produk"/></h2>
-                        <h2 class="o_freight_attendance_message_message mt4 mb24"/>
-                        <div class="alert alert-info h2 mt0" role="status">
-                            Checked in at <b><t t-esc="widget.attendance.check_in_time"/></b>
-                        </div>
-                        <h3 class="o_freight_attendance_random_message mb24"/>
-                        <div class="o_freight_attendance_warning_message mt24 alert alert-warning" style="display:none" role="alert"/>
-                    </t>
-                    <button class="o_freight_attendance_button_dismiss btn btn-primary btn-lg">
-                        <span class="text-capitalize" t-if="widget.attendance.check_out">Goodbye</span>
-                        <span class="text-capitalize" t-else="">OK</span>
-                    </button>
-                </t>
-                <t t-else="">
-                    <div class="alert alert-warning" role="alert">Invalid request, please return to the main menu.</div>
-                    <button class="o_freight_attendance_button_dismiss btn btn-secondary btn-lg">Go back</button>
-                </t>
+                <t t-if="widget.message == 'sukses'">
+					<h1 class="mb0">Checkin !</h1>
+					<h2 class="mb0">Nomor DO :<t t-esc="widget.employee_name"/></h2>
+					<h2 class="mb0">Kendaraan :<t t-esc="widget.kendaraan"/></h2>
+					<h2 class="mb0">Produk :<t t-esc="widget.produk"/></h2>
+					<h2 class="mb0">Expired :<t t-esc="widget.expired_date"/></h2>
+					<div class="alert alert-info h2 mt0" role="status">
+						Checked in at <b><t t-esc="widget.attendance.check_in_time"/></b>
+					</div>
+					<h3 class="o_freight_attendance_random_message mb24"/>
+					<div class="o_freight_attendance_warning_message mt24 alert alert-warning" style="display:none" role="alert"/>
+				</t>
+				<t t-else="">
+					<h1 class="mb0">Informasi !</h1>
+					<h2 class="mb0">Nomor DO :<t t-esc="widget.employee_name"/></h2>
+					<h2 class="mb0">Kendaraan :<t t-esc="widget.kendaraan"/></h2>
+					<h2 class="mb0">Produk :<t t-esc="widget.produk"/></h2>
+					<h2 class="mb0">Expired :<t t-esc="widget.expired_date"/></h2>
+					<div class="alert alert-info h2 mt0" role="status">
+						<t t-esc="widget.message"/><br/>
+						<t t-esc="widget.pos"/><br/>
+						<t t-esc="widget.shift"/><br/>
+						<t t-esc="widget.user"/>
+					</div>
+					<h3 class="o_freight_attendance_random_message mb24"/>
+					<div class="o_freight_attendance_warning_message mt24 alert alert-warning" style="display:none" role="alert"/>
+				</t>
+				<button class="o_freight_attendance_button_dismiss btn btn-primary btn-lg">
+					<span class="text-capitalize">OK</span>
+				</button>
             </div>
         </div>
     </t>
 </template>
+

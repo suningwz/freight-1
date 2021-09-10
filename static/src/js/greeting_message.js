@@ -53,7 +53,19 @@ odoo.define('freight_attendance.greeting_message', function (require) {
             this.employee_name = action.employee_name;
             this.kendaraan = action.kendaraan;
             this.produk = action.produk;
+			this.pos="";
+			this.shift="";
+			this.user="";
+			this.expired_date = action.expired_date;			
             this.attendanceBarcode = action.barcode;
+			this.message=action.message;
+			if(action.message.includes('Terscan' )){
+				this.message = "DO sudah terscan pada "+this.attendance.check_in.format("DD-MMM-YYYY HH:mm:ss");
+				this.pos = "POS: "+this.attendance.gardu[1];
+				this.shift = "Shift: "+this.attendance.shift[1];
+				this.user = "User: "+this.attendance.user_id[1];
+			}
+			
         },
     
         start: function() {

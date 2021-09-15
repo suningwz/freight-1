@@ -23,26 +23,36 @@ odoo.define('freight_attendance.kiosk_mode', function (require) {
             var self = this;
             core.bus.on('barcode_scanned', this, this._onBarcodeScanned);
             self.session = Session;
+			this.rekap_do = [];
+			this._rpc({
+				model: 'freight.attendance',
+				method: 'rekap_do_kiosK',
+				args: ['test', ],
+			}).then(function (data) {
+				console.log(data);
+				self.rekap_do = data;
+				self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
+			});
+		
+			this._rpc({
+				model: 'res.users',
+				method: 'get_users_login_pos',
+				args: [Session.uid, ],
+			}).then(function (data) {
+				self.pos_name = data;
+				console.log(data);
+				self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
+			});
 
-		this._rpc({
-			model: 'res.users',
-			method: 'get_users_login_pos',
-			args: [Session.uid, ],
-		}).then(function (data) {
-			self.pos_name = data;
-			console.log(data);
-			self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
-		});
-
-		this._rpc({
-			model: 'res.users',
-			method: 'get_users_login_shift',
-			args: [Session.uid, ],
-		}).then(function (shift) {
-			self.shift_name = shift;
-			console.log(shift);
-			self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
-		});
+			this._rpc({
+				model: 'res.users',
+				method: 'get_users_login_shift',
+				args: [Session.uid, ],
+			}).then(function (shift) {
+				self.shift_name = shift;
+				console.log(shift);
+				self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
+			});
 
             var def = this._rpc({
                     model: 'res.company',

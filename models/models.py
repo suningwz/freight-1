@@ -404,6 +404,44 @@ class Attendance(models.Model):
         else:
             self.env.user.notify_info('Belum ada penerimaan untuk saat ini',"Informasi", True)
             return
+            
+    def rekap_do_kiosK(self):
+        jam = datetime.now().time().hour + 7
+        login_user = self.env['res.users'].search([('id', '=', self.env.uid)])
+        if jam >= 0 and jam < 6 :
+            kemarin = datetime.now()-timedelta(days=1)
+            hari_ini = datetime.strftime(kemarin,'%Y-%m-%d')
+        else:
+            hari_ini = datetime.strftime(fields.Datetime.now(),'%Y-%m-%d')
+            if login_user.shift.name == 'Shift 1' and jam >= 29 and jam <=31:  
+                hari_ini = datetime.strftime(fields.Date.today()+timedelta(days=1),'%Y-%m-%d')
+        self.env.cr.execute(
+            """
+            select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
+                from 
+	                freight_attendance a
+                left join 
+                    (product_product b left join product_template c on b.product_tmpl_id=c.id ) on a.produk = b.id
+                left join
+                    tipe_kendaraan d on a.tipe_kendaraan = d.id
+                left join
+                    delivery_order e on a.do_id = e.id
+                where a.tanggal = '%s' and gardu = %s and shift = %s and (e.state='open' or e.state='done') 
+                group by a.gardu, a.shift, d.name, c.name
+                order by a.gardu, a.shift, d.name, c.name
+            """ % (hari_ini, self.env.user.gardu.id, self.env.user.shift.id))
+        hasil = self.env.cr.fetchall()
+        result =[]
+        if hasil:
+            usermessage = ''
+            for baris in hasil:
+                data = {'Hasil':'%s/%s : %s'%(baris[2],baris[3], baris[4])};
+                result.append(data);
+            # raise UserError(usermessage)
+            return result;
+
+        else:
+            return 
 
     @api.one
     @api.depends('check_in')

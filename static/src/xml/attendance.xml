@@ -10,10 +10,22 @@
             <span class="o_freight_attendance_kiosk_backdrop"/>
             <div class="o_freight_attendance_clock text-center"/>
             <div class="o_freight_attendance_kiosk_mode">
-		<h1><small>Nama:</small> <t t-esc="widget.session.name"/></h1>
-		<h1><small>Pos:</small> <t t-esc="widget.pos_name"/>      <small>Shift:</small> <t t-esc="widget.shift_name"/></h1>
-                <h1><small>Welcome to</small> <t t-esc="widget.company_name"/></h1>
-                <img t-attf-src="{{widget.company_image_url}}" alt="Company Logo" class="o_freight_attendance_kiosk_company_image"/>
+				<h1><small>Nama:</small> <t t-esc="widget.session.name"/></h1>
+				<h1><small>Pos:</small> <t t-esc="widget.pos_name"/>      <small>Shift:</small> <t t-esc="widget.shift_name"/></h1>
+				<h1><small>Welcome to</small> <t t-esc="widget.company_name"/></h1>
+                <div style="text-align: left;border-radius: 10px;background-color: lightgrey;padding: 5px;margin: 10px 0 10px 0;">
+					<h3 style="text-align: center">Perlohean Hari ini </h3>
+					<div class="row">
+						<t t-if="widget.rekap_do">
+							<t t-foreach="widget.rekap_do" t-as="item">
+								<div class="col-sm-6" style="width:50%">
+									<h4><t t-esc ="item.Hasil"/></h4>
+								</div>
+							</t>
+						</t>
+					</div>
+				</div>
+				
                 <div class="row o_freight_attendance_kiosk_welcome_row">
                     <div class="col-sm-12">
                         <img class="img img-fluid d-block mx-auto" src="/freight/static/src/img/barcode.png"/>
@@ -22,17 +34,18 @@
                     <div class="col-sm-12">
                         <h3 class="mt0 mb8"><i>or</i></h3>
                     </div>
-                    <div class="col-sm-4">
+
+                    <div class="col-sm-4" style="width:33%">
                         <button class="o_freight_attendance_button_manual btn btn-primary mb16">
                             <div class="mb16 mt16">Manual</div>
                         </button>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="width:33%">
                         <button class="o_freight_attendance_button_rekap btn btn-primary mb16">
                             <div class="mb16 mt16">Information</div>
                         </button>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="width:33%">
                         <button class="o_freight_attendance_button_logout btn btn-primary mb16">
                             <div class="mb16 mt16">Logout</div>
                         </button>
@@ -146,4 +159,3 @@
         </div>
     </t>
 </template>
-

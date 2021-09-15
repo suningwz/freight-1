@@ -353,11 +353,15 @@ class Attendance(models.Model):
 
     def rekap_do(self):
         jam = datetime.now().time().hour + 7
+        login_user = self.env['res.users'].search([('id', '=', self.env.uid)])
         if jam >= 0 and jam < 6 :
             kemarin = datetime.now()-timedelta(days=1)
             hari_ini = datetime.strftime(kemarin,'%Y-%m-%d')
         else:
-            hari_ini = datetime.strftime(fields.Date.today(),'%Y-%m-%d')
+            hari_ini = datetime.strftime(fields.Datetime.now(),'%Y-%m-%d')
+            if login_user.shift.name == 'Shift 1' and jam >= 29 and jam <=31:  
+                hari_ini = datetime.strftime(fields.Date.today()+timedelta(days=1),'%Y-%m-%d')
+
         self.env.cr.execute(
             """
             select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
@@ -493,4 +497,5 @@ class PosShift(models.Model):
     _description = 'Pos Shift'
 
     name = fields.Char(string='Name')
+
 

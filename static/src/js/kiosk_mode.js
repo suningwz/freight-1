@@ -66,6 +66,7 @@ odoo.define('freight_attendance.kiosk_mode', function (require) {
                     self.start_clock();
                 });
             // Make a RPC call every day to keep the session alive
+			self._displayrekapinterval = window.setInterval(this._displayrekap.bind(this), 5*1000);
             self._interval = window.setInterval(this._callServer.bind(this), (60*60*1000*24));
             return $.when(def, this._super.apply(this, arguments));
         },
@@ -100,9 +101,32 @@ odoo.define('freight_attendance.kiosk_mode', function (require) {
             core.bus.off('barcode_scanned', this, this._onBarcodeScanned);
             clearInterval(this.clock_start);
             clearInterval(this._interval);
+			clearInterval(this._displayrekapinterval);
             this._super.apply(this, arguments);
         },
-    
+		
+		_displayrekap: function () {
+			var self = this;
+			this.rekap_do = [];
+			this._rpc({
+				model: 'freight.attendance',
+				method: 'rekap_do_kiosK',
+				args: ['test', ],
+			}).then(function (data) {
+				console.log(data);
+				self.rekap_do = data;
+				self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
+			});
+			this._rpc({
+				model: 'res.users',
+				method: 'get_users_login_pos',
+				args: [Session.uid, ],
+			}).then(function (data) {
+				console.log(data);
+				self.$el.html(QWeb.render("FreightAttendanceKioskMode", {widget: self}));
+			});
+		},
+		
         _callServer: function () {
             // Make a call to the database to avoid the auto close of the session
             return ajax.rpc("/freight_attendance/kiosk_keepalive", {});

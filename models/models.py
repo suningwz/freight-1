@@ -78,9 +78,9 @@ class DeliveryOrder(models.Model):
         if self.name:
             if self.barcode_type == 'qr':
                 if os.name == 'nt':
-                    filename = 'd:\\odoo project\\freight\\qr\\'+self.name+'.png'
+                    filename = 'D:\\qr\\'+self.name+'.png'
                     qr_code = pyqrcode.create(self.name)
-                    qr_code.png('d:\\odoo project\\freight\\qr\\'+self.name+'.png', scale=6)
+                    qr_code.png('D:\\qr\\'+self.name+'.png', scale=6)
                 else:
                     filename = '/tmp/'+self.name+'.png'
                     qr_code = pyqrcode.create(self.name)
@@ -88,7 +88,7 @@ class DeliveryOrder(models.Model):
             else:
                 code128 = barcode.get('code128', self.name, writer=ImageWriter())
                 if os.name == 'nt':
-                    filename = code128.save('d:\\odoo project\\freight\\qr\\bc'+self.name)
+                    filename = code128.save('D:\\qr\\bc'+self.name)
                 else:
                     filename = code128.save('/tmp/'+self.name)
             f = open(filename, mode="rb")

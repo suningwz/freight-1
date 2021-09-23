@@ -1,6 +1,5 @@
 <odoo>
     <data>
-
       <template id="report_barcode_do_new4">
          <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
@@ -16,7 +15,8 @@
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan1']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk1']"/></p>
                                  <img t-if="o['barcode1']" t-att-src="image_data_uri(o['barcode1'])" style="height:200px;width:200px;"/>
-                                 <p style="font-size:12px">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
+                                 <p style="font-size:12px">Surat jalan ini berlaku 5 (tiga) bulan sejak dikeluarkan</p>	
+								 <p><span style="font-size:20px;font-weight:bold" t-esc="o['seq1']"/></p>
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
@@ -26,6 +26,7 @@
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk2']"/></p>
                                  <img t-if="o['barcode2']" t-att-src="image_data_uri(o['barcode2'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px;">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
+								 <p><span style="font-size:20px;font-weight:bold" t-esc="o['seq2']"/></p>
                               </div>
                            </div>
                            <div style="display: table-row;">
@@ -37,6 +38,7 @@
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk3']"/></p>
                                  <img t-if="o['barcode3']" t-att-src="image_data_uri(o['barcode3'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
+								 <p><span style="font-size:20px;font-weight:bold" t-esc="o['seq3']"/></p>
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
@@ -46,6 +48,7 @@
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk4']"/></p>
                                  <img t-if="o['barcode4']" t-att-src="image_data_uri(o['barcode4'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px;">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
+								 <p><span style="font-size:20px;font-weight:bold" t-esc="o['seq4']"/></p>
                               </div>
                            </div>
                         </div>

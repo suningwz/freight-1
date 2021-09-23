@@ -48,25 +48,31 @@ class PrintDOBatch(models.AbstractModel):
         do_end = data['form']['do_end']
         docs = []
         data_do = self.env['print.do'].search([])
+        seq = 0;
         for rec in data_do:
             docs.append({
                 'name1': rec.do1_id.name,
                 'kendaraan1': rec.do1_id.tipe_kendaraan.name,
                 'produk1': rec.do1_id.produk.name,
                 'barcode1': rec.do1_id.barcode_image,
+                'seq1' : seq+1,
                 'name2': rec.do2_id.name,
                 'kendaraan2': rec.do2_id.tipe_kendaraan.name,
                 'produk2': rec.do2_id.produk.name,
                 'barcode2': rec.do2_id.barcode_image,
+                'seq2' : seq+2,
                 'name3': rec.do3_id.name,
                 'kendaraan3': rec.do3_id.tipe_kendaraan.name,
                 'produk3': rec.do3_id.produk.name,
                 'barcode3': rec.do3_id.barcode_image,
+                'seq3' : seq+3,
                 'name4': rec.do4_id.name,
                 'kendaraan4': rec.do4_id.tipe_kendaraan.name,
                 'produk4': rec.do4_id.produk.name,
                 'barcode4': rec.do4_id.barcode_image,
+                'seq4' : seq+4,
             })
+            seq =+ 4;
         return {
             'doc_ids' : data['ids'],
             'doc_model': data['model'],

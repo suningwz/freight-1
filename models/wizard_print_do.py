@@ -7,6 +7,7 @@ class WizardPrintDo(models.TransientModel):
 
     do_start = fields.Many2one(comodel_name='delivery.order', required="1", string='Nomor DO awal')
     do_end = fields.Many2one(comodel_name='delivery.order', required="1", string='Nomor DO akhir')
+    do_pos = fields.Many2one(comodel_name='pos.gardu', string='Pos')
     digit = fields.Integer(string="Jumlah digit", default=11)
 
     def action_print_do(self):
@@ -32,7 +33,8 @@ class WizardPrintDo(models.TransientModel):
             'model': self._name,
             'form': {
                 'do_start': self.do_start,
-                'do_end': self.do_end,   
+                'do_end': self.do_end, 
+                'do_pos':self.do_pos.name
             }
         }
         return self.env.ref('freight.action_report_barcode_member_batch').report_action(self,data=data)
@@ -46,11 +48,13 @@ class PrintDOBatch(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         do_start = data['form']['do_start']
         do_end = data['form']['do_end']
+        do_pos = data['form']['do_pos']
         docs = []
         data_do = self.env['print.do'].search([])
         seq = 0;
         for rec in data_do:
             docs.append({
+                'do_pos':do_pos,
                 'name1': rec.do1_id.name,
                 'kendaraan1': rec.do1_id.tipe_kendaraan.name,
                 'produk1': rec.do1_id.produk.name,
@@ -72,7 +76,9 @@ class PrintDOBatch(models.AbstractModel):
                 'barcode4': rec.do4_id.barcode_image,
                 'seq4' : seq+4,
             })
-            seq =+ 4;
+            seq += 4;
+            if seq == 100 :
+               seq = 0;
         return {
             'doc_ids' : data['ids'],
             'doc_model': data['model'],

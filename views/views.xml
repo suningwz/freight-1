@@ -349,6 +349,7 @@
               <!-- Add your fields here -->
               <field name="do_start" domain="[('state','=','open')]"/>
               <field name="do_end" domain="[('state','=','open')]"/>
+			  <field name="do_pos" />
               <field name="digit"/>
             </group>
             <footer>

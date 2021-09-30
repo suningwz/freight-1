@@ -118,6 +118,7 @@ class DeliveryOrder(models.Model):
         action_message['kendaraan'] = self.tipe_kendaraan.name
         action_message['produk']  =self.produk.name
         action_message['expired_date'] = self.expired_date
+        action_message['keterangan'] = self.keterangan
         action_message['next_action'] = next_action
         
         if self.env.user:
@@ -172,6 +173,12 @@ class DeliveryOrder(models.Model):
                         'attendance':attendance,
                         'message':'DO Sudah Expired'
                     }
+            elif self.state == 'cancel':
+                attendance = self.env['freight.attendance'].search([('check_out', '=', False)], limit=1)
+                return {
+                    'attendance':attendance,
+                    'message':'DO Di Blokir'
+                }
             else:
                 attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
                 return {
@@ -180,10 +187,10 @@ class DeliveryOrder(models.Model):
                 }
 
         else:
-            attendance = self.env['freight.attendance'].search([('do_id','=',self.id)], limit=1)
+            attendance = self.env['freight.attendance'].search([('check_out', '=', False)], limit=1)
             return {
                 'attendance':attendance,
-                'message':'DO Sudah Terscan'
+                'message':'lain-lain'
             }
 
     @api.depends('attendance_ids')

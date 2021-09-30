@@ -65,6 +65,9 @@ odoo.define('freight_attendance.greeting_message', function (require) {
 				this.shift = "Shift: "+this.attendance.shift[1];
 				this.user = "User: "+this.attendance.user_id[1];
 			}
+			else if(action.message.includes('Blokir' )){
+				this.message = action.keterangan;
+			}
 			
         },
     

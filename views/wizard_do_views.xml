@@ -11,6 +11,7 @@
                             <!-- Add your fields here -->
                             <field name="tipe_kendaraan" required="1"/>
                             <field name="produk"  required="1"/>
+							<field name="customer_do" required="1"/>
                             <field name="date" required="1"/>
                             <field name="expired_date" required="1"/>
                             <!-- <field name="qty"/> -->

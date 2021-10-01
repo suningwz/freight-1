@@ -9,6 +9,7 @@ class WizardDO(models.TransientModel):
     tipe_kendaraan = fields.Many2one(comodel_name='tipe.kendaraan', string='Tipe Kendaraan')
     produk = fields.Many2one(comodel_name='product.product', string='Produk')
     total_do = fields.Integer(string='Total DO', default=0)
+    customer_do = fields.Many2one(comodel_name='customer.do', string='Customer')
     qty = fields.Float(string='Qty', default=0)
     date = fields.Date(string='Tgl DO', default=fields.Date.today())
     expired_date = fields.Date(string='Tgl. Kadaluwarsa')
@@ -20,6 +21,7 @@ class WizardDO(models.TransientModel):
             vals = {
                 'name' : name,
                 'tipe_kendaraan' : self.tipe_kendaraan.id,
+                'customer_do' : self.customer_do.id,
                 'produk': self.produk.id,
                 'qty': self.qty,
                 'date' : self.date,

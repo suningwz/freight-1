@@ -33,6 +33,7 @@ class DeliveryOrder(models.Model):
     attendance_state = fields.Selection(string="Attendance", compute='_compute_attendance_state', selection=[('checked_out', "Checked out"), ('checked_in', "Checked in")], store=True)
     keterangan = fields.Text(string='Keterangan')
     active = fields.Boolean(string='active',default=True)
+    customer_do = fields.Many2one(comodel_name='customer.do', string='Customer DO')
     
 
     api.one
@@ -543,4 +544,9 @@ class PosShift(models.Model):
 
     name = fields.Char(string='Name')
 
-
+class CustomerDO(models.Model):
+    _name = 'customer.do'
+    _description = 'Customer DO'
+    
+    name = fields.Char(string='Name')
+    

@@ -6,3 +6,4 @@ access_tipe_kendaraan,tipe.kendaraan,model_tipe_kendaraan,,1,1,1,1
 access_freight_attendance,freight.attendance,model_freight_attendance,,1,1,1,1
 access_print_do,print.do,model_print_do,,1,1,1,1
 access_pos_shift,pos.shift,model_pos_shift,,1,1,1,1
+access_customer_do,customer.do,model_customer_do,,1,1,1,1

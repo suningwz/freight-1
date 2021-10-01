@@ -480,7 +480,7 @@
         </tree>
       </field>
     </record>
-
+	
     <!-- pos.shift action window -->
     <record id="pos_shift_action" model="ir.actions.act_window">
       <field name="name">Tabel master shift</field>
@@ -501,5 +501,37 @@
 
     <!-- This Menu Item must have a parent and an action -->
     <menuitem id="pos_shift_menu_act" name="Master Shift" parent="freight_config_menu_categ" action="pos_shift_action" sequence="40"/>
+	
+	
+    <!-- customer.do tree view -->
+    <record id="customer_do_view_tree" model="ir.ui.view">
+      <field name="name">customer.do.view.tree</field>
+      <field name="model">customer.do</field>
+      <field name="arch" type="xml">
+        <tree>
+          <!-- Add your fields here -->
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+	
+    <!-- customer.do action window -->
+    <record id="customer_do_action" model="ir.actions.act_window">
+      <field name="name">Tabel Master Customer</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">customer.do</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_type">form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+          click create to create entry
+        </p><p>
+          <!-- More details about what a user can do with this object will be OK --> 
+          Tabel Master Customer
+        </p>
+      </field>
+    </record>
+	
   </data>
 </odoo>

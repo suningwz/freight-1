@@ -146,6 +146,7 @@
                 <field name="shift"/>
                 <field name="tipe_kendaraan"/>
                 <field name="produk"/>
+				<field name="customer_do"/>
                 <field name="check_in"/>
                 <field name="check_out"/>
                 <field name="state"/>

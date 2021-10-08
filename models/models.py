@@ -246,6 +246,7 @@ class Attendance(models.Model):
                                 readonly=True)
     tipe_kendaraan = fields.Many2one(comodel_name='tipe.kendaraan',string='Tipe Kendaraan', related="do_id.tipe_kendaraan", store=True)
     produk = fields.Many2one(comodel_name='product.product', string='Produk', related="do_id.produk", store=True)
+    customer_do = fields.Many2one(related="do_id.customer_do")
     user_id = fields.Many2one(comodel_name='res.users', string='User')
     gardu = fields.Many2one(comodel_name='pos.gardu', string='Pos')
     shift = fields.Many2one(comodel_name='pos.shift',string='Shift')    

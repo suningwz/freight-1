@@ -10,35 +10,45 @@
                            <div style="display: table-row;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
 								 <div style="width:100%; display: table;">
-									<div align="left" style="width:50%;display: table-cell;font-size:18px;" >
-										<t t-if="o['do_pos']">
-											<span t-esc="o['do_pos']" />
-										</t>
+									<div style="display: table-row;">
+										<div align="center" style="width:50%;display: table-cell;font-size:18px;" >
+											<t t-if="o['do_pos']">
+												<span t-esc="o['do_pos']" />
+											</t>
+										</div>
+										 <div align="center" style="width:50%;display: table-cell;font-size:18px;" ><span t-esc="o['seq1']" /></div>
 									</div>
-									 <div align="right" style="width:50%;font-size:18px;" ><span t-esc="o['seq1']" /></div>
 								 </div>
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
 <p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name1']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan1']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk1']"/></p>
+								<t t-if="o['do_cust']">
+									<p>Customer : <span style="font-size:20px;font-weight:bold" t-esc="o['do_cust1']"/></p>	
+								</t>
                                  <img t-if="o['barcode1']" t-att-src="image_data_uri(o['barcode1'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>	
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
-								  <div style="width:100%; display: table;padding-left:10px">
-									<div align="left" style="width:50%;display: table-cell;font-size:18px;" >
-										<t t-if="o['do_pos']">
-											<span t-esc="o['do_pos']" />
-										</t>
+								 <div style="width:100%; display: table;">
+									<div style="display: table-row;">
+										<div align="center" style="width:50%;display: table-cell;font-size:18px;" >
+											<t t-if="o['do_pos']">
+												<span t-esc="o['do_pos']" />
+											</t>
+										</div>
+										 <div align="center" style="width:50%;display: table-cell;font-size:18px;" ><span t-esc="o['seq2']" /></div>
 									</div>
-									 <div align="right" style="width:50%;font-size:18px;" ><span t-esc="o['seq2']" /></div>
 								 </div>
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
 <p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name2']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan2']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk2']"/></p>
+								<t t-if="o['do_cust']">
+									<p>Customer : <span style="font-size:20px;font-weight:bold" t-esc="o['do_cust2']"/></p>	
+								</t>
                                  <img t-if="o['barcode2']" t-att-src="image_data_uri(o['barcode2'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px;">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
                               </div>
@@ -46,35 +56,45 @@
                            <div style="display: table-row;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
 								 <div style="width:100%; display: table;">
-									<div align="left" style="width:50%;display: table-cell;font-size:18px;" >
-										<t t-if="o['do_pos']">
-											<span t-esc="o['do_pos']" />
-										</t>
+									<div style="display: table-row;">
+										<div align="center" style="width:50%;display: table-cell;font-size:18px;" >
+											<t t-if="o['do_pos']">
+												<span t-esc="o['do_pos']" />
+											</t>
+										</div>
+										 <div align="center" style="width:50%;display: table-cell;font-size:18px;" ><span t-esc="o['seq3']" /></div>
 									</div>
-									 <div align="right" style="width:50%;font-size:18px;" ><span t-esc="o['seq3']" /></div>
 								 </div>
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
 <p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name3']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan3']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk3']"/></p>
+								<t t-if="o['do_cust']">
+									<p>Customer : <span style="font-size:20px;font-weight:bold" t-esc="o['do_cust3']"/></p>
+								</t>
                                  <img t-if="o['barcode3']" t-att-src="image_data_uri(o['barcode3'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
                               </div>
                               <div align="center" style="display:table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
-								  <div style="width:100%; display: table;padding-left:10px">
-									<div align="left" style="width:50%;display: table-cell;font-size:18px;" >
-										<t t-if="o['do_pos']">
-											<span t-esc="o['do_pos']" />
-										</t>
+								 <div style="width:100%; display: table;">
+									<div style="display: table-row;">
+										<div align="center" style="width:50%;display: table-cell;font-size:18px;" >
+											<t t-if="o['do_pos']">
+												<span t-esc="o['do_pos']" />
+											</t>
+										</div>
+										 <div align="center" style="width:50%;display: table-cell;font-size:18px;" ><span t-esc="o['seq4']" /></div>
 									</div>
-									 <div align="right" style="width:50%;font-size:18px;" ><span t-esc="o['seq4']" /></div>
 								 </div>
                                  <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height: 45px;" alt="Logo"/>
 <p style="font-size:12px">DO hanya digunakan untuk di pos <span style="font-size:20px;font-weight:bold" t-field="res_company.report_header" /> </p>
                                  <p>Nomor : <span style="font-size:20px;font-weight:bold" t-esc="o['name4']"/></p>
                                  <p>Type : <span style="font-size:20px;font-weight:bold" t-esc="o['kendaraan4']"/></p>
                                  <p>Produk : <span style="font-size:20px;font-weight:bold" t-esc="o['produk4']"/></p>
+								<t t-if="o['do_cust']">
+									<p>Customer : <span style="font-size:20px;font-weight:bold" t-esc="o['do_cust4']"/></p>
+								</t>
                                  <img t-if="o['barcode4']" t-att-src="image_data_uri(o['barcode4'])" style="height:200px;width:200px;"/>
                                  <p style="font-size:12px;">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
                               </div>

@@ -373,19 +373,19 @@ class Attendance(models.Model):
 
         self.env.cr.execute(
             """
-            select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
+              select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
                 from 
-	                freight_attendance a
+	                ( select tipe_kendaraan, produk, gardu, shift, do_id, tanggal from freight_attendance where tanggal = '%s' group by gardu, shift,produk,tipe_kendaraan,do_id, tanggal) as a
                 left join 
                     (product_product b left join product_template c on b.product_tmpl_id=c.id ) on a.produk = b.id
                 left join
                     tipe_kendaraan d on a.tipe_kendaraan = d.id
                 left join
                     delivery_order e on a.do_id = e.id
-                where a.tanggal = '%s' and gardu = %s and shift = %s and (e.state='open' or e.state='done') 
-                group by a.gardu, a.shift, d.name, c.name
+                where a.tanggal = '%s' and gardu =%s and shift =  %s and (e.state='open' or e.state='done') 
+		group by a.gardu, a.shift, d.name, c.name
                 order by a.gardu, a.shift, d.name, c.name
-            """ % (hari_ini, self.env.user.gardu.id, self.env.user.shift.id))
+            """ % (hari_ini, hari_ini, self.env.user.gardu.id, self.env.user.shift.id))
 
         hasil = self.env.cr.fetchall()
         if hasil:
@@ -426,19 +426,19 @@ class Attendance(models.Model):
                 hari_ini = datetime.strftime(fields.Date.today()+timedelta(days=1),'%Y-%m-%d')
         self.env.cr.execute(
             """
-            select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
+              select a.gardu, a.shift, d.name as kendaraan, c.name as produk, count(a.do_id) as qty
                 from 
-	                freight_attendance a
+	                ( select tipe_kendaraan, produk, gardu, shift, do_id, tanggal from freight_attendance where tanggal = '%s' group by gardu, shift,produk,tipe_kendaraan,do_id, tanggal) as a
                 left join 
                     (product_product b left join product_template c on b.product_tmpl_id=c.id ) on a.produk = b.id
                 left join
                     tipe_kendaraan d on a.tipe_kendaraan = d.id
                 left join
                     delivery_order e on a.do_id = e.id
-                where a.tanggal = '%s' and gardu = %s and shift = %s and (e.state='open' or e.state='done') 
-                group by a.gardu, a.shift, d.name, c.name
+                where a.tanggal = '%s' and gardu =%s and shift =  %s and (e.state='open' or e.state='done') 
+		group by a.gardu, a.shift, d.name, c.name
                 order by a.gardu, a.shift, d.name, c.name
-            """ % (hari_ini, self.env.user.gardu.id, self.env.user.shift.id))
+            """ % (hari_ini, hari_ini, self.env.user.gardu.id, self.env.user.shift.id))
         hasil = self.env.cr.fetchall()
         result =[]
         if hasil:

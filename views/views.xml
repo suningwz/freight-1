@@ -351,6 +351,7 @@
               <field name="do_start" domain="[('state','=','open')]"/>
               <field name="do_end" domain="[('state','=','open')]"/>
 			  <field name="do_pos" />
+			  <field name="do_cust" />
               <field name="digit"/>
             </group>
             <footer>

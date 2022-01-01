@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_res_users_pos,res.users.pos,model_res_users_pos,,1,1,1,1
+access_do_details,do.details,model_do_details,,1,1,1,1
 access_pos_gardu,pos.gardu,model_pos_gardu,,1,1,1,1
 access_delivery_order,delivery.order,model_delivery_order,,1,1,1,1
 access_tipe_kendaraan,tipe.kendaraan,model_tipe_kendaraan,,1,1,1,1

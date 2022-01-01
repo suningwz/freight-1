@@ -25,7 +25,8 @@
 						</t>
 					</div>
 				</div>
-				
+				 
+               
                 <div class="row o_freight_attendance_kiosk_welcome_row">
                     <div class="col-sm-12">
                         <img class="img img-fluid d-block mx-auto" src="/freight/static/src/img/barcode.png"/>
@@ -34,18 +35,23 @@
                     <div class="col-sm-12">
                         <h3 class="mt0 mb8"><i>or</i></h3>
                     </div>
-
-                    <div class="col-sm-4" style="width:33%">
+                  <div class="col-sm-3" style="width:25%">
                         <button class="o_freight_attendance_button_manual btn btn-primary mb16">
                             <div class="mb16 mt16">Manual</div>
                         </button>
                     </div>
-                    <div class="col-sm-4" style="width:33%">
+                   
+                    <div class="col-sm-3" style="width:25%">
+                        <button class="o_freight_attendance_button_details btn btn-primary mb16">
+                            <div class="mb16 mt16">List Nomor Do</div>
+                        </button>
+                    </div>
+                    <div class="col-sm-3" style="width:25%">
                         <button class="o_freight_attendance_button_rekap btn btn-primary mb16">
                             <div class="mb16 mt16">Information</div>
                         </button>
                     </div>
-                    <div class="col-sm-4" style="width:33%">
+                    <div class="col-sm-3" style="width:25%">
                         <button class="o_freight_attendance_button_logout btn btn-primary mb16">
                             <div class="mb16 mt16">Logout</div>
                         </button>

@@ -35,6 +35,7 @@
         'views/wizard_print_rekap_shift_view.xml',
         'views/web_asset_backend_template.xml',
         'views/wizard_user_status_view.xml',
+        'views/wizard_do_details.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -153,7 +153,6 @@
             </tree>
         </field>
     </record>
-
     
     <record id="freight_attendance_form_view" model="ir.ui.view">
         <field name="name">gerdhu.attendace.form.view</field>

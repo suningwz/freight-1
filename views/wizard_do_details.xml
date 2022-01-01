@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="freight_do_details_view_tree" model="ir.ui.view">
+            <field name="name">do.deatils.tree.view</field>
+            <field name="model">freight.attendance</field>
+            <field name="arch" type="xml">
+                <!-- <tree string="Penerimaan Delivery Order" decoration-success="state=='done'" decoration-danger="state=='cancel'" create="false" edit="false" delete="false"> -->
+                <tree string="hasil Laporan Hari ini" >
+                    <field name="do_id"/>
+                    <field name="tipe_kendaraan"/>
+                    <field name="produk"/>
+                    <field name="check_in"/>
+                </tree>
+            </field>
+        </record>
+    
+        <act_window id="launched_do_details"
+            name = "List Nomer DO yang sudah Masuk"
+            view_type= 'form'
+            src_model = "freight.attendance"
+            res_model = "freight.attendance"
+            view_mode = "tree,form"
+            target = "new"
+            />
+    </data>
+</odoo>

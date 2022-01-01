@@ -18,19 +18,19 @@ class DeliveryOrder(models.Model):
     _name = 'delivery.order'
     _description = 'Delivery Order untuk angkutan'
 
-    name = fields.Char(string='Name', default='draft')
+    name = fields.Char(string='Name', index=True, default='draft')
     tipe_kendaraan = fields.Many2one(comodel_name='tipe.kendaraan', string='Tipe Kendaraan')
     produk = fields.Many2one(comodel_name='product.product', string='Produk')
     qty = fields.Float(string='Qty', default=0)
-    date = fields.Date(string='Tgl DO', default=fields.Date.today())
+    date = fields.Date(string='Tgl DO', default=fields.Date.today(), index=True)
     expired_date = fields.Date(string='Tgl. Kadauwarsa')
     gate_ids = fields.One2many(comodel_name='do.gate', inverse_name='do_id', string='gate ids')
     barcode_type = fields.Selection(string="Barcode type", selection=[('barcode','Barcode'),('qr', 'QR')], default='barcode')
     barcode_image = fields.Binary(string='Barcode Inage')
-    state = fields.Selection(string='status', selection=[('draft', 'Draft'), ('open', 'Open'), ('done', 'Done'), ('cancel', 'Cancel')], default='draft')
+    state = fields.Selection(string='status', index=True, selection=[('draft', 'Draft'), ('open', 'Open'), ('done', 'Done'), ('cancel', 'Cancel')], default='draft')
     attendance_ids = fields.One2many('freight.attendance', 'do_id', help='list of attendances for the member')
     last_attendance_id = fields.Many2one('freight.attendance', compute='_compute_last_attendance_id')
-    attendance_state = fields.Selection(string="Attendance", compute='_compute_attendance_state', selection=[('checked_out', "Checked out"), ('checked_in', "Checked in")], store=True)
+    attendance_state = fields.Selection(string="Attendance", index=True, compute='_compute_attendance_state', selection=[('checked_out', "Checked out"), ('checked_in', "Checked in")], store=True)
     keterangan = fields.Text(string='Keterangan')
     active = fields.Boolean(string='active',default=True)
     customer_do = fields.Many2one(comodel_name='customer.do', string='Customer DO')
@@ -254,7 +254,7 @@ class Attendance(models.Model):
         selection=[('draft', 'Draft'), ('open', 'Open'), ('done', 'Done'), ('cancel', 'Cancel')],
         related='do_id.state',
         default='draft')
-    tanggal = fields.Date(string='Tanggal', compute='_hitung_tanggal', store=True, readonly=True)
+    tanggal = fields.Date(string='Tanggal', compute='_hitung_tanggal',index=True, store=True, readonly=True)
     
 
     @api.multi

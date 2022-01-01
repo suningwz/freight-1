@@ -9,7 +9,7 @@
                     <sheet>
                         <group>
                             <!-- Add your fields here -->
-                            <field name="do_id" domain="[('state','=','open')]"/>
+                            <field name="do_id" domain="[('active','=',1),('state','=','open')]"/>
                             <field name="tipe_kendaraan" readonly="1"/>
                             <field name="produk"  readonly="1"/>
                             <field name="date" readonly="1"/>

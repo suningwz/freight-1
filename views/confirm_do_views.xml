@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+        <!--confirmdo Kanban View -->
+        <record model="ir.ui.view" id="confirm_do_view_kanban">
+            <field name="name">confirm.do.view.kanban</field>
+            <field name="model">confirm.do</field>
+            <field name="arch" type="xml">
+                <kanban create="false" class="o_confirm_do_kanban">
+                    <field name="do_start"/>
+                    <field name="do_end"/>
+                    <field name="customer_do"/>
+                    <field name="tipe_kendaraan"/>
+                    <field name="produk"/>
+                    <field name="confirmed"/>
+                    <field name="total_do"/>
+                    <field name="CreatedDo_date"/>
+                    <field name="confirmedDo_by"/>
+                    <field name="CreatedDo_date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="text-center">
+                                    <i class="fa fa-truck" role="img"/>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <strong><field name="tipe_kendaraan"/><span> - </span>
+                                            <field name="produk"/></strong>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <field name="number_do"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt4 mb4"/>
+                                <div class="row">
+                                        <div t-if="record.customer_do.value" class="col-6 text-center">
+                                            <strong>Customer:</strong>
+                                        </div>
+                                        <div t-if="record.total_do.value" class="col-6 text-center">
+                                            <strong>Total</strong>
+                                        </div>
+                                        <div t-if="record.customer_do.value" class="col-6 text-center">
+                                            <field name="customer_do"/>
+                                        </div>
+                                        <div t-if="record.total_do.value" class="col-6 text-center o_force_ltr">
+                                            <field name="total_do"/>
+                                        </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px" attrs="{'invisible':[('confirmed','=',False)]}">
+                                    <div class="col-6 text-center">
+                                        <div class="text-muted">
+                                            <strong>Confirmed</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <button type="object" class="btn btn-primary" name="button_cetak_do">Cetak DO</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 20px" attrs="{'invisible':[('confirmed','=',True)]}">
+                                    <div class="col-12">
+                                        <button type="object" class="btn btn-primary" name="button_confirm_do" >Confirm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- confirm.do action window -->
+        <record id="confirm_do_action" model="ir.actions.act_window">
+        <field name="name">Confirm DO</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">confirm.do</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            <!-- Add Text Here -->
+            click create to add new item
+            </p><p>
+            <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+        </record>
+
+        <record id="action_confirm_do_form_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="confirm_do_view_kanban"/>
+            <field name="act_window_id" ref="confirm_do_action"/>
+        </record>
+        
+    </data>
+</odoo>

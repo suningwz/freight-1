@@ -1,26 +1,27 @@
 <odoo>
     <data>
-        <record id="freight_do_details_view_tree" model="ir.ui.view">
-            <field name="name">do.deatils.tree.view</field>
-            <field name="model">freight.attendance</field>
+        <record id="wizard_do_details_view_tree" model="ir.ui.view">
+            <field name="name">wizard.do.details.tree.view</field>
+            <field name="model">wizard.do.details</field>
             <field name="arch" type="xml">
                 <!-- <tree string="Penerimaan Delivery Order" decoration-success="state=='done'" decoration-danger="state=='cancel'" create="false" edit="false" delete="false"> -->
-                <tree string="hasil Laporan Hari ini" >
-                    <field name="do_id"/>
+                <tree string="List DO hasil Laporan Hari ini" create="false" edit="false" delete="false">
+                    <field name="nomor_do"/>
                     <field name="tipe_kendaraan"/>
                     <field name="produk"/>
+                    <field name="tanggal"/>
                     <field name="check_in"/>
                 </tree>
             </field>
         </record>
-    
-        <act_window id="launched_do_details"
-            name = "List Nomer DO yang sudah Masuk"
-            view_type= 'form'
-            src_model = "freight.attendance"
-            res_model = "freight.attendance"
-            view_mode = "tree,form"
-            target = "new"
-            />
+        <record id="launched_wizard_detailsdo" model="ir.actions.act_window">
+            <field name="name">List Nomor DO Hari ini</field>
+            <field name="res_model">wizard.do.details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="freight_do_details_view_tree"/>
+            <field name="target">new</field>
+        </record>
     </data>
 </odoo>

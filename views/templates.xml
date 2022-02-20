@@ -6,7 +6,7 @@
                <t t-call="web.layout">
                   <div class="page">
                      <div class="article">
-                        <div style="width:100%; display: table;">
+                        <div style="width:100%;display: table;">
                            <div style="display: table-row;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:20px;padding-bottom:5px;height:550px">
 								 <div style="width:100%; display: table;">
@@ -53,7 +53,7 @@
                                  <p style="font-size:12px;">Surat jalan ini berlaku 3 (tiga) bulan sejak dikeluarkan</p>
                               </div>
                            </div>
-                           <div style="display: table-row;">
+                           <div style="display: table-row;padding-top:300px;">
                               <div align="center" style="width:50%;display: table-cell;font-size:20px;font-weight:bold;padding-top:100px;padding-bottom:5px;height:550px">
 								 <div style="width:100%; display: table;">
 									<div style="display: table-row;">

@@ -15,6 +15,7 @@
           <field name="attendance_state"/>
           <field name="state"/>
           <field name="keterangan"/>
+		  <field name="customer_do"/>
         </tree>
       </field>
     </record>
@@ -45,6 +46,7 @@
               <field name="tipe_kendaraan" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
               <field name="produk" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
 							<field name="expired_date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+			  <field name="customer_do" readonly='1'/>
               <field name="keterangan" readonly="1"/>
             </group>
             <group string="Barcode">

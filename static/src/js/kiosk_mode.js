@@ -12,16 +12,40 @@ odoo.define('freight_attendance.kiosk_mode', function(require) {
         events: {
             "click .o_freight_attendance_button_manual": function() { this.do_action('freight.launched_wizard_do_cancel'); },
             "click .o_freight_attendance_button_details": function() {
-                var self = this;
-                this._rpc({
-                    model: 'do.details',
-                    method: 'details_do',
-                    args: ['test'],
+                // var self = this;
+                this.do_action('freight.launched_wizard_detailsdo');
 
-                }).then(function(data) {
-                    self.do_action('freight.launched_do_details');
-                    self.$el.html(QWeb.render("FreightAttendanceKioskMode", { widget: self }));
+                this.do_action({
+                    name: ("Help"),
+                    type: 'ir.actions.act_window',
+                    res_model: 'freight.attendance',
+                    // domain: "[('tanggal','=','2022-01-04')]",
+                    view_mode: 'tree,form',
+                    view_type: 'form',
+                    'target': 'new',
+                    'flags': { 'list': { 'action_buttons': false }, },
+                    views: [
+                        [false, 'list']
+                    ],
                 });
+                // this._rpc({
+                //     model: 'do.details',
+                //     method: 'details_do',
+                //     args: ['test'],
+
+                // }).then(function(data) {
+                //     self.do_action({
+                //         'name': '',
+                //         'type': 'ir.actions.act_window',
+                //         'context': { 'value': [('tanggal', '=', '2021-01-04')] },
+                //         'view_type': 'form',
+                //         'view_mode': 'tree',
+                //         'res_model': 'freight.attendance',
+                //         'view_id': self.env.ref('freight.freight_do_details_view_tree').id,
+                //         'target': 'new',
+                //     });
+                //     self.$el.html(QWeb.render("FreightAttendanceKioskMode", { widget: self }));
+                // });
 
             },
             "click .o_freight_attendance_button_rekap": function() {
@@ -86,7 +110,7 @@ odoo.define('freight_attendance.kiosk_mode', function(require) {
                     self.start_clock();
                 });
             // Make a RPC call every day to keep the session alive
-            self._displayrekapinterval = window.setInterval(this._displayrekap.bind(this),5 * 60 * 1000);
+            self._displayrekapinterval = window.setInterval(this._displayrekap.bind(this), 5 * 1000);
             self._interval = window.setInterval(this._callServer.bind(this), (60 * 60 * 1000 * 24));
             return $.when(def, this._super.apply(this, arguments));
         },

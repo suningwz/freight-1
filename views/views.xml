@@ -26,7 +26,7 @@
       <field name="arch" type="xml">
         <form string="Delivery Order">
           <header>
-            <button name="action_confirm" type="object" string="Confirm" states='draft' class="oe_highlight"/>
+            <!-- <button name="action_confirm" type="object" string="Confirm" states='draft' class="oe_highlight"/> -->
               confirm="Anda yakin akan menghapus data ini ??"/>
             <button name="action_generate_barcode" type="object" string="Generate Barcode"/>
             <button name="action_cancel" type="object" string="Cancel" states='open' class="btn-danger" confirm="apakah yakin akan dibatalkan??"/>

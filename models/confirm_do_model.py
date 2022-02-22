@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 class ConfirmDo(models.Model):
     _name = 'confirm.do'
     _description = 'Konfirmasi DO'
+    _order = "CreatedDo_date desc"
     
     do_start = fields.Char(string='DO Awal')
     do_end = fields.Char(string='DO Akhir')
